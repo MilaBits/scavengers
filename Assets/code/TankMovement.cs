@@ -4,14 +4,21 @@ namespace code
 {
     public class TankMovement : VehicleMovementBase
     {
-        public override void Move(Vector2 directionalInput)
+        private Vector2 _directionalInput;
+        
+        protected override void ProcessInput()
         {
-            float forwardMovement = directionalInput.y * Settings.moveSpeed * Time.deltaTime;
-            float rotation = directionalInput.x * Settings.turnSpeed * Time.deltaTime;
+            _directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        }
 
-            Transform t;
-            (t = transform).Rotate(Vector3.up, rotation);
-            t.position += t.forward * forwardMovement;
+        public override void Move()
+        {
+            float movement = _directionalInput.y * Settings.moveSpeed.y;
+            Quaternion deltaRotation = Quaternion.Euler(0, _directionalInput.x * Settings.turnSpeed * Time.deltaTime, 0);
+
+            Transform t = transform;
+            Rb.MoveRotation(Rb.rotation * deltaRotation);
+            Rb.velocity = t.forward * movement;
         }
     }
 }

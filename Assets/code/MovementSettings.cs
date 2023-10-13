@@ -22,7 +22,7 @@ namespace code
         
         public MovementType movementType;
         [Space]
-        public float moveSpeed = 5f;
+        public Vector2 moveSpeed = new Vector2(2f,5f);
         public float turnSpeed = 100f;
         [Space]
         public bool mouseRelative = false;

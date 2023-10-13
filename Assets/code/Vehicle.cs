@@ -4,8 +4,7 @@ namespace code
 {
     public class Vehicle : MonoBehaviour
     {
-        [SerializeField]
-        private MovementSettings movementSettings;
+        [SerializeField] private MovementSettings movementSettings;
         
         private VehicleMovementBase _movement;
 
