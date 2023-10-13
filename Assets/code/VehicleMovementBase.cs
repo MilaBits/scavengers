@@ -1,19 +1,35 @@
+using System;
 using UnityEngine;
 
 namespace code
 {
     public abstract class VehicleMovementBase : MonoBehaviour
     {
+        protected Rigidbody Rb;
         protected MovementSettings Settings;
-        public void Update()
+
+        private void Update()
         {
-            Move(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+            Move();
         }
-        public abstract void Move(Vector2 directionalInput);
+
+        protected abstract void ProcessInput();
+
+        public void FixedUpdate()
+        {            
+            ProcessInput();
+        }
+        
+        public abstract void Move();
         public void Init(MovementSettings settings)
         {
             enabled = true;
             Settings = settings;
+        }
+
+        private void OnEnable()
+        {
+            Rb = GetComponentInChildren<Rigidbody>();
         }
     }
 }
